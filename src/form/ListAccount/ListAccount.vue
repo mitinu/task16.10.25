@@ -6,10 +6,11 @@
         @click.stop="addAccount"
       />
     </div>
-    <div class="listAccount__hint">
-      <div class="listAccount__hint__circle">&#63;</div>
-      <span>Для указания нескольких методов для одной пары логин/пароль, используйте разделитель "; "</span>
-    </div>
+    <hintComponent
+      backgroundColor="lightsteelblue"
+      sign="&#63;"
+      text='Для указания нескольких методов для одной пары логин/пароль, используйте разделитель "; "'
+    />
     <div class="listAccount__list">
       <div class="listAccount__list__head">
         <div class="listAccount__list__head__item"><span>Метки</span></div>
@@ -44,12 +45,14 @@ import ListItem from "./components/ListItem.vue";
 import {useAccountsStore} from "@/stores/accounts";
 import { mapState, mapActions } from "pinia";
 import AddButton from "@/components/UI/AddButton.vue";
+import HintComponent from "@/components/HintComponent.vue";
 
 export default {
   name: 'ListAccount',
   components:{
     ListItem,
-    AddButton
+    AddButton,
+    HintComponent
   },
   setup() {
     const accountsStore = useAccountsStore()

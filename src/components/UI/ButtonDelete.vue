@@ -9,7 +9,7 @@ import {defineComponent, type PropType} from 'vue'
 import WastebasketIcon from "@/components/svg/WastebasketIcon.vue";
 
 export default defineComponent({
-  name: 'ButtonDelete.vue',
+  name: 'ButtonDelete',
   components: {
     WastebasketIcon
   }
