@@ -14,9 +14,15 @@ interface Account {
     password: string | null
 }
 
+interface AccountsState {
+    typeRecords: TypeRecord[]
+    accounts: Record<number, Account>
+    nextId: number
+}
+
 
 export const useAccountsStore = defineStore("accounts",{
-    state: () => ({
+    state: (): AccountsState => ({
         typeRecords:[
             {
                 value: "local",
@@ -27,33 +33,33 @@ export const useAccountsStore = defineStore("accounts",{
                 table: "Глобальная"
             }
         ] as TypeRecord[],
-        accounts:[
-            {
+        accounts: {
+            0:{
                 id: 0,
                 tags:["tag1", "tag2", "tag3"],
                 recordType: "local",
                 login: "login",
                 password: "password"
             },
-            {
+            1:{
                 id: 1,
                 tags:["tag1", "tag2", "tag3"],
                 recordType: "local",
                 login: "login2",
                 password: "password"
             }
-        ] as Account[],
+        },
         nextId: 2
     }),
     actions:{
         updateTags(accountId: number, newTags: string): void {
-            const account = this.accounts.find(acc => acc.id === accountId);
+            const account = this.accounts[accountId];
             if (account) {
                 account.tags = newTags.split("; ");
             }
         },
         updateLogin(accountId: number, newLogin: string): void {
-            const account = this.accounts.find(acc => acc.id === accountId);
+            const account = this.accounts[accountId];
             if (account) {
                 account.login = newLogin;
             }
@@ -62,7 +68,7 @@ export const useAccountsStore = defineStore("accounts",{
             // if (!this.typeRecords.some(record => record.value === newRecordType)) {
             //     return;
             // }
-            const account = this.accounts.find(acc => acc.id === accountId);
+            const account = this.accounts[accountId];
             if (account) {
                 account.recordType = newRecordType;
                 if (newRecordType=="LDAP"){
@@ -74,7 +80,7 @@ export const useAccountsStore = defineStore("accounts",{
             }
         },
         updatePassword(accountId: number, newPassword: string): void {
-            const account = this.accounts.find(acc => acc.id === accountId);
+            const account = this.accounts[accountId];
             if (account) {
                 account.password = newPassword;
             }
@@ -87,14 +93,11 @@ export const useAccountsStore = defineStore("accounts",{
                 login: "",
                 password: ""
             };
-            this.accounts.push(newAccount);
+            this.accounts[this.nextId] = newAccount;
             this.nextId++;
         },
         deleteAccount(accountId: number): void {
-            const index = this.accounts.findIndex(acc => acc.id === accountId);
-            if (index !== -1) {
-                this.accounts.splice(index, 1);
-            }
+            delete this.accounts[accountId];
         }
     }
 })
