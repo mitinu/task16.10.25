@@ -8,20 +8,20 @@
     </div>
     <div class="listAccount__hint">
       <div class="listAccount__hint__circle">&#63;</div>
-      <span>Для указания несколькиз методов для одной пары логин/пароль, используйте разделитель "; "</span>
+      <span>Для указания нескольких методов для одной пары логин/пароль, используйте разделитель "; "</span>
     </div>
     <div class="listAccount__list">
       <div class="listAccount__list__head">
         <div class="listAccount__list__head__item"><span>Метки</span></div>
         <div class="listAccount__list__head__item"><span>Тип записи</span></div>
         <div class="listAccount__list__head__item"><span>Логин</span></div>
-        <div class="listAccount__list__head__item"><span>Парол</span></div>
+        <div class="listAccount__list__head__item"><span>Пароль</span></div>
         <div class="listAccount__list__wastebasket"></div>
       </div>
       <div class="listAccount__list__content">
         <datalist id="recordType">
           <option
-              v-for="(typeRecord, idx) in accountsStotre.typeRecords"
+              v-for="(typeRecord, idx) in accountsStore.typeRecords"
               :key="idx"
               :value="typeRecord.value"
               :label="typeRecord.table"
@@ -29,7 +29,7 @@
         </datalist>
         <ListItem
           class="listAccount__list__content__recording"
-          v-for="account in accountsStotre.accounts"
+          v-for="account in accountsStore.accounts"
           :key="account.id"
           :account="account"
           :store="accountsStore"
@@ -52,8 +52,8 @@ export default {
     AddButton
   },
   setup() {
-    const accountsStotre = useAccountsStore()
-    return {accountsStotre}
+    const accountsStore = useAccountsStore()
+    return {accountsStore}
   },
   methods:{
     ...mapActions(useAccountsStore, ['addAccount']),

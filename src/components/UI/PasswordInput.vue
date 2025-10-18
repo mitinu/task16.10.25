@@ -1,7 +1,7 @@
 <template>
   <div class="input">
     <input :type="showPassword ? 'text' : 'password'"  :value="value" @change="changeValue">
-    <button type="button" @click="swapShowPassword" class="toggle-btn">
+    <button type="button" @click.stop="swapShowPassword" class="toggle-btn">
         <span class="showPassword">
           <template v-if="showPassword"><eyeOpenIcon/></template>
           <template v-else><eyeClosedIcon/></template>

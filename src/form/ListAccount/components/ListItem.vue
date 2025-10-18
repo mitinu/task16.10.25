@@ -24,19 +24,23 @@
           @changeValue="changePassword"
       />
     </div>
-    <div class="listAccount__list__wastebasket"><wastebasketIcon/></div>
+    <div class="listAccount__list__wastebasket">
+      <buttonDelete
+        @click.stop="deleteAccount(account.id)"
+      />
+    </div>
   </div>
-</template>
+  </template>
 
 <script lang="ts">
 import {defineComponent, type PropType} from 'vue'
 import { useAccountsStore } from "@/stores/accounts";
 import { mapState, mapActions } from "pinia";
-import WastebasketIcon from "@/components/svg/WastebasketIcon.vue";
 import LoginInput from "@/components/UI/LoginInput.vue";
 import RecordTypeInput from "@/components/UI/RecordTypeInput.vue";
 import TagsInput from "@/components/UI/TagsInput.vue";
 import PasswordInput from "@/components/UI/PasswordInput.vue";
+import ButtonDelete from "@/components/UI/ButtonDelete.vue";
 
 interface Account {
   id: number
@@ -53,7 +57,7 @@ export default defineComponent({
     RecordTypeInput,
     TagsInput,
     PasswordInput,
-    WastebasketIcon
+    ButtonDelete
   },
   props:{
     account: {
@@ -67,7 +71,6 @@ export default defineComponent({
     }
   },
   methods:{
-
     ...mapActions(useAccountsStore, ['updateTags']),
     changeTags(newTags: string): void{
       this.updateTags(this.account.id, newTags);
@@ -86,7 +89,9 @@ export default defineComponent({
     ...mapActions(useAccountsStore, ['updatePassword']),
     changePassword(newPassword: string): void{
       this.updatePassword(this.account.id, newPassword);
-    }
+    },
+
+    ...mapActions(useAccountsStore, ['deleteAccount'])
   }
 })
 </script>

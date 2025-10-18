@@ -90,6 +90,11 @@ export const useAccountsStore = defineStore("accounts",{
             this.accounts.push(newAccount);
             this.nextId++;
         },
-
+        deleteAccount(accountId: number): void {
+            const index = this.accounts.findIndex(acc => acc.id === accountId);
+            if (index !== -1) {
+                this.accounts.splice(index, 1);
+            }
+        }
     }
 })
